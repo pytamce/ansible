@@ -10,7 +10,7 @@ alias mv='mv -i'
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
-export PS1="[\e[0;32;1m \t \e[0;33;1m\u\e[m@\e[0;31;1m\h\e[m@\e[0;34;1m \w\e[m ]\\$\[$(tput sgr0)\] "
+export PS1="[\e[0;32;1m \t \e[0;33;1m\u\e[m@\e[0;31;1m\h\e[m@\e[0;34;1m \w\e[m ] \\$\[$(tput sgr0)\] "
 cat<<'EOF'
            _..._
          .'     '.
