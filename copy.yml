@@ -1,0 +1,10 @@
+---
+
+- name: Copy file to inventory hosts
+  hosts: all
+  tasks:
+
+  - name: Copy file
+    copy:
+      src: ./files/test
+      dest: /var/tmp/
