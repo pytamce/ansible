@@ -1,19 +1,39 @@
 ---
 
 - name: Install Apache
-  hosts: Ubuntu
+  hosts: all
   tasks:
   
   - name: Update repository index
     apt:
       update_cache: yes
+    when: ansible_distribution in ["Ubuntu"]
 
   - name: Install apache2 package
     apt:
       name: apache2
       state: latest
+    when: ansible_distribution in ["Ubuntu"]
 
   - name: Install php support for Apache
     apt:
       name: libapache2-mod-php
       state: latest
+    when: ansible_distribution in ["Ubuntu"]
+
+  - name: Update repository index
+    dnf:
+      update_cache: yes
+    when: ansible_distribution in ["RedHat"]
+
+  - name: Install apache2 package
+    dnf:
+      name: httpd
+      state: latest
+    when: ansible_distribution in ["RedHat"]
+
+  - name: Install php support for Apache
+    dnf:
+      name: php
+      state: latest
+    when: ansible_distribution in ["RedHat"]
