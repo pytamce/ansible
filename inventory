@@ -1,9 +1,10 @@
+[web_servers]
 Host1
-Host2
 Host3
-Host4
-Host5
 
-[Ubuntu]
-Host3
+[db_servers]
+Host2
 Host4
+
+[file_servers]
+Host5

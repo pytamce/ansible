@@ -9,15 +9,11 @@
       update_cache: yes
     when: ansible_distribution in ["Ubuntu"]
 
-  - name: Install apache2 package
+  - name: Install apache2 and php support package
     apt:
-      name: apache2
-      state: latest
-    when: ansible_distribution in ["Ubuntu"]
-
-  - name: Install php support for Apache
-    apt:
-      name: libapache2-mod-php
+      name: 
+        - apache2
+        - libapache2-mod-php
       state: latest
     when: ansible_distribution in ["Ubuntu"]
 
@@ -26,14 +22,10 @@
       update_cache: yes
     when: ansible_distribution in ["RedHat"]
 
-  - name: Install apache2 package
+  - name: Install httpd and php support package
     dnf:
-      name: httpd
-      state: latest
-    when: ansible_distribution in ["RedHat"]
-
-  - name: Install php support for Apache
-    dnf:
-      name: php
+      name: 
+        - httpd
+        - php
       state: latest
     when: ansible_distribution in ["RedHat"]
