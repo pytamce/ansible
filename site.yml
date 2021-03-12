@@ -57,6 +57,30 @@
       group: root
       mode: 0644
 
+  - name: Start httpd (RHEL)
+    tags: httpd,apache,rhel
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+    when: ansible_distribution in ["RedHat"]
+
+  - name: Change email address in index.html file
+    tags: httpd,apache,rhel
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin'
+      line: ServerAdmin pytamce@pytamce.net
+    when: ansible_distribution in ["RedHat"]
+    register: httpd
+
+  - name: Restart httpd (RHEL)
+    tags: httpd,apache,rhel
+    service:
+      name: httpd
+      state: restarted
+    when: httpd.changed
+
 
 - name: Install DB (mariadb) package
   hosts: db_servers
@@ -75,6 +99,7 @@
       name: mariadb-server
       state: latest
     when: ansible_distribution in ["Ubuntu"]
+
 
 - name: Install samba
   hosts: file_servers
