@@ -1,0 +1,6 @@
+- name: Install samba server package
+  tags: samba
+  zypper:
+    name: samba
+    state: latest
+  when: ansible_distribution in ["SLES"]
