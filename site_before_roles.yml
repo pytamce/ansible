@@ -1,0 +1,125 @@
+---
+
+- name: Install updates
+  hosts: all
+  pre_tasks:
+
+  - name: Update repository cache (RHEL)
+    tags: always
+    dnf:
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution in ["RedHat"]
+
+  - name: Update repository cache (Ubuntu)
+    tags: always
+    apt:
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution in ["Ubuntu"]
+
+  - name:  Update repository cache (SLES)
+    tags: always
+    zypper:
+      name: '*'
+      state: latest
+    changed_when: false
+    when: ansible_distribution in ["SLES"]
+
+
+- hosts: all
+  tasks:
+
+
+  - name: Add key to pytamce user
+    tags: always
+    authorized_key:
+      user: pytamce
+      key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDV6kiLo0Uy9dW2KjRIEzitSaPOjF7CoMTUFizYHXY9E30K/78V0t5Z2Cfpy/YoeuIPyzvClBP4Wr60m3p+cW//yLVPnX8dEhpTN2VwnrMiw/TAsOEohgDQ8y+wUwvCYGkHdhO9/ftB3Gc8Sy1XeNnpkO03uQ9TZDDPjYwrfyfI98S3PW1/oBPBhKK3odMehRes7q/M0c3js7QhAR6TQvbgRkYzXusWdQzFDASi/RJ/lFcbFs2uONvA3TApeXAaUnn48iwSiRu3bRYNhBBNc4pqZweXfL5BZMOL7HBxWTaM1equETjlZgIM0HmIhbp7umQPM+iwgXzUjtczBH/GBHCAlp6SCRfvT9ErdzEkukZ5/hUX83mtJr8vOvhN2puWs+ba1tGMVo/6ewSxbtSWXdSnfRWTz+XrGGKA0VuwSpIkhOYfIHjC+V0BiP5oGYnSk86KKIq3rGoBMFn+yA9VcKuiPJ1BqI16mxRvdcVY59hAaDgxRwGVQC3yq1N+xdB2qgk="
+
+
+- name: Install apache on web_servers
+  hosts: web_servers
+  tasks:
+
+  - name: Install apache2 and php support package (Ubuntu)
+    tags: apache,apache2,ubuntu
+    apt:
+      name: 
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution in ["Ubuntu"]
+
+  - name: Install httpd and php support package (RHEL)
+    tags: apache,httpd,rhel
+    dnf:
+      name: 
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution in ["RedHat"]
+
+  - name: Copy default html file for apache
+    tags: apache,apache2,httpd
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: Start httpd (RHEL)
+    tags: httpd,apache,rhel
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+    when: ansible_distribution in ["RedHat"]
+
+  - name: Change email address in index.html file
+    tags: httpd,apache,rhel
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin'
+      line: ServerAdmin pytamce@pytamce.net
+    when: ansible_distribution in ["RedHat"]
+    register: httpd
+
+  - name: Restart httpd (RHEL)
+    tags: httpd,apache,rhel
+    service:
+      name: httpd
+      state: restarted
+    when: httpd.changed
+
+
+- name: Install DB (mariadb) package
+  hosts: db_servers
+  tasks:
+
+  - name: Install mariadb DB (RHEL)
+    tags: db,mariadb,rhel
+    dnf:
+      name: mariadb
+      state: latest
+    when: ansible_distribution in ["RedHat"]
+
+  - name: Install mariadb DB (Ubuntu)
+    tags: db,mariadb,ubuntu
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution in ["Ubuntu"]
+
+
+- name: Install samba
+  hosts: file_servers
+  tasks:
+
+  - name: Install samba server package
+    tags: samba
+    zypper:
+      name: samba
+      state: latest
+    when: ansible_distribution in ["SLES"]
