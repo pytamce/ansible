@@ -48,6 +48,15 @@
       state: latest
     when: ansible_distribution in ["RedHat"]
 
+  - name: Copy default html file for apache
+    tags: apache,apache2,httpd
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
 
 - name: Install DB (mariadb) package
   hosts: db_servers
