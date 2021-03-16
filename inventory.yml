@@ -1,0 +1,46 @@
+---
+all:
+  children:
+    web_servers:
+      children:
+        rhel_web:
+          hosts:
+            Host1:
+          vars:
+            apache_package_name: httpd
+            apache_service: httpd
+            php_package_name: php
+            ssh_users: "root pytamce"
+            ssh_template_file: sshd_config_centos.j2
+        ubuntu_web:
+          hosts:
+            Host3:
+          vars:
+           apache_package_name: apache2
+           apache_service: apache2
+           php_package_name: libapache2-mod-php
+           ssh_users: "root pytamce martin"
+           ssh_template_file: sshd_config_ubuntu.j2
+    db_servers:
+      children:
+        rhel_db:
+          hosts:
+            Host2:
+          vars:
+            ssh_users: "root pytamce"
+            ssh_template_file: sshd_config_centos.j2
+        ubuntu_db:
+          hosts:
+            Host4:
+          vars:
+            apache_package_name: apache2
+            apache_service: apache2
+            php_package_name: libapache2-mod-php
+            ssh_users: "root pytamce martin"
+            ssh_template_file: sshd_config_ubuntu.j2
+    file_servers:
+      hosts:
+        Host5:
+      vars:
+        ssh_users: "root pytamce"
+        ssh_template_file: sshd_config_centos.j2
