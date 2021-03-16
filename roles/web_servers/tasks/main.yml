@@ -7,14 +7,14 @@
     state: latest
   when: ansible_distribution in ["Ubuntu"]
 
-- name: Install httpd and php support package (RHEL)
-  tags: apache,httpd,rhel
-  dnf:
+- name: Install httpd and php support package (CentOS)
+  tags: apache,httpd,centos
+  yum:
     name:
       - "{{ apache_package_name }}"
       - "{{ php_package_name }}"
     state: latest
-  when: ansible_distribution in ["RedHat"]
+  when: ansible_distribution in ["CentOS"]
 
 - name: Copy default html file for apache
   tags: apache,apache2,httpd
@@ -25,19 +25,19 @@
     group: root
     mode: 0644
 
-- name: Start httpd (RHEL)
-  tags: httpd,apache,rhel
+- name: Start httpd (CentOS)
+  tags: httpd,apache,centos
   service:
     name: "{{ apache_service }}"
     state: started
     enabled: yes
-  when: ansible_distribution in ["RedHat"]
+  when: ansible_distribution in ["CentOS"]
 
 - name: Change email address in index.html file
-  tags: httpd,apache,rhel
+  tags: httpd,apache,centos
   lineinfile:
     path: /etc/httpd/conf/httpd.conf
     regexp: '^ServerAdmin'
-    line: ServerAdmin pytamce@pytamce.org
-  when: ansible_distribution in ["RedHat"]
+    line: ServerAdmin pytamce@pytamce.com
+  when: ansible_distribution in ["CentOS"]
   notify: restart_apache

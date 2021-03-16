@@ -4,12 +4,12 @@
   hosts: all
   pre_tasks:
 
-  - name: Update repository cache (RHEL)
+  - name: Update repository cache (CentOS)
     tags: always
-    dnf:
+    yum:
       update_cache: yes
     changed_when: false
-    when: ansible_distribution in ["RedHat"]
+    when: ansible_distribution in ["CentOS"]
 
   - name: Update repository cache (Ubuntu)
     tags: always
@@ -17,14 +17,6 @@
       update_cache: yes
     changed_when: false
     when: ansible_distribution in ["Ubuntu"]
-
-  - name:  Update repository cache (SLES)
-    tags: always
-    zypper:
-      name: '*'
-      state: latest
-    changed_when: false
-    when: ansible_distribution in ["SLES"]
 
 
 - hosts: all

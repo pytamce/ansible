@@ -1,9 +1,9 @@
-- name: Install mariadb DB (RHEL)
-  tags: db,mariadb,rhel
-  dnf:
+- name: Install mariadb DB (CentOS)
+  tags: db,mariadb,centos
+  yum:
     name: mariadb
     state: latest
-  when: ansible_distribution in ["RedHat"]
+  when: ansible_distribution in ["CentOS"]
 
 - name: Install mariadb DB (Ubuntu)
   tags: db,mariadb,ubuntu

@@ -1,6 +1,6 @@
 - name: Install samba server package
   tags: samba
-  zypper:
+  yum:
     name: samba
     state: latest
-  when: ansible_distribution in ["SLES"]
+  when: ansible_distribution in ["CentOS"]

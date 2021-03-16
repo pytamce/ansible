@@ -1,7 +1,7 @@
 - name: Add key to pytamce user
   authorized_key:
     user: pytamce
-    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDV6kiLo0Uy9dW2KjRIEzitSaPOjF7CoMTUFizYHXY9E30K/78V0t5Z2Cfpy/YoeuIPyzvClBP4Wr60m3p+cW//yLVPnX8dEhpTN2VwnrMiw/TAsOEohgDQ8y+wUwvCYGkHdhO9/ftB3Gc8Sy1XeNnpkO03uQ9TZDDPjYwrfyfI98S3PW1/oBPBhKK3odMehRes7q/M0c3js7QhAR6TQvbgRkYzXusWdQzFDASi/RJ/lFcbFs2uONvA3TApeXAaUnn48iwSiRu3bRYNhBBNc4pqZweXfL5BZMOL7HBxWTaM1equETjlZgIM0HmIhbp7umQPM+iwgXzUjtczBH/GBHCAlp6SCRfvT9ErdzEkukZ5/hUX83mtJr8vOvhN2puWs+ba1tGMVo/6ewSxbtSWXdSnfRWTz+XrGGKA0VuwSpIkhOYfIHjC+V0BiP5oGYnSk86KKIq3rGoBMFn+yA9VcKuiPJ1BqI16mxRvdcVY59hAaDgxRwGVQC3yq1N+xdB2qgk="
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDTel/Ny4DINPbXlXLOq9ZLueBfDrH8wCQnGxqN7QacGEahfrDuAiVsgzMy5/nhy/heAdstvMBhiTEfkHHCrOmxf2dr6XfgkwJ8BD6G/tKpsINlEmcklUhLfbyc5D8SK1s48d+gl9/4ZvBtd2grIpJ+fdSfoSI+SyXvfuomtK94B3UFHZbB8nJNhxTZfOirgjyXwymVOd19S7N2UNI+hL12gL2LROe5wrK3DE9hRCbo+2FqH7dQAlhSe9XtfufE9oqddsJkE9REfKdL1U5vppUxuw4/7XiyCg4bEwDBEHj7zKDkl3fzmGImZJfdDREYHX5S/vLRJbfzl79iNdmZax59 root@master"
 
 - name: Generate sshd_config file from template
   tags: ssh
