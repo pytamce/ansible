@@ -1,0 +1,32 @@
+---
+
+- name: Install apache
+  hosts: Host5
+  gather_facts: false
+  tasks:
+
+    - name: Deploy apache
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Start apache service
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Edit config file for apache
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        state: present
+        regexp: '^ServerAdmin'
+        line: ServerAdmin pytamce@pytamce.org
+      notify: restart_httpd
+
+  handlers:
+
+    - name: restart_httpd
+      service:
+        name: httpd
+        state: restarted

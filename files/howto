@@ -1,2 +1,3 @@
 Generate pwd for user module:
 ansible localhost -m debug -a "msg={{ 'dslinux' | password_hash('sha512','AZ') }}"
+ansible all -m debug -a 'msg=System name is {{ sys_name }} and the SSH port is {{ ansible_port }}"'

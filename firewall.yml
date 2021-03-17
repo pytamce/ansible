@@ -1,0 +1,19 @@
+---
+
+- name: Open firewall
+  hosts: Host5
+  gather_facts: false
+  vars:
+    firewall_services:
+      - http
+      - https
+    service_state: enabled
+  tasks:
+    - name: Open HTTP
+      firewalld:
+        service: "{{ item }}"
+        state: "{{ service_state }}"
+        immediate: true
+        permanent: true
+      loop: "{{ firewall_services }}"
+...  
