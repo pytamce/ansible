@@ -44,3 +44,4 @@ all:
       vars:
         ssh_users: "root pytamce"
         ssh_template_file: sshd_config_centos.j2
+        admin_group: wheel

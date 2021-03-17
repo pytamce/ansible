@@ -1,0 +1,2 @@
+Generate pwd for user module:
+ansible localhost -m debug -a "msg={{ 'dslinux' | password_hash('sha512','AZ') }}"

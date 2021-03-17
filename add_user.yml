@@ -1,0 +1,27 @@
+---
+
+- name: Add user to the system
+  hosts: file_servers
+  tasks:
+
+    - name: Create user
+      user:
+        name: devops
+        groups: "{{ admin_group }}"
+        create_home: true
+        comment: 'Devops technical user'
+        expires: -1
+        password: '$6$AZ$5tsYLMzYoFDU1coZWg4wkSoFBuAdIne3pDIOClVYvHEtaLi/gYbeUHRJd.sTA3tJj49YSmk.MZfk4JvVTSGD7.'
+
+    - name: Add SSH key
+      authorized_key:
+        user: devops
+        state: present
+        manage_dir: true
+        key: "{{ lookup('file' , '/root/.ssh/id_rsa.pub') }}"
+
+    - name: Grand user sudo rights
+      copy:
+        dest: /etc/sudoers.d/devops
+        content: 'devops ALL=(ALL) ALL'
+        validate: /usr/sbin/visudo -cf %s
